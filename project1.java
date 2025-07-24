@@ -1,34 +1,43 @@
-import java.util.Scanner;
+class BankAccount {
+    private String accountNumber;
+    private String accountHolder;
+    private double balance;
 
-public class PerfectNumber {
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter a number: ");
-        int num = scanner.nextInt();
-
-        if (isPerfect(num)) {
-            System.out.println(num + " is a perfect number.");
-        } else {
-            System.out.println(num + " is not a perfect number.");
-        }
-
-        scanner.close();
+    public BankAccount(String accNumber, String holder, double initialBalance) {
+        this.accountNumber = accNumber;
+        this.accountHolder = holder;
+        this.balance = initialBalance;
     }
 
-    public static boolean isPerfect(int number) {
-        if (number <= 1) {
-            return false;
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited: $" + amount);
         }
+    }
 
-        int sum = 1; // 1 is always a proper divisor
-        for (int i = 2; i <= number / 2; i++) {
-            if (number % i == 0) {
-                sum += i;
-            }
+    public void withdraw(double amount) {
+        if (amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawn: $" + amount);
+        } else {
+            System.out.println("Insufficient funds.");
         }
+    }
 
-        return sum == number;
+    public void displayDetails() {
+        System.out.println("Account Holder: " + accountHolder);
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Balance: $" + balance);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        BankAccount acc = new BankAccount("123456", "Alice", 500.0);
+        acc.displayDetails();
+        acc.deposit(250);
+        acc.withdraw(100);
+        acc.displayDetails();
     }
 }
